@@ -35,14 +35,18 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
 
         mTvContext = (TextView)findViewById(R.id.tv_context);
 
-
+        /**
+         * Retrofit 初始化
+         */
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
         NetInterface netInterface = retrofit.create(NetInterface.class);
 
+        /**
+         * Retrofit 网络请求级Rxjava线程切换
+         */
         netInterface.getMusic("58451795")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

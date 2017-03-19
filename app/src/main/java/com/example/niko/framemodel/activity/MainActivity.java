@@ -40,10 +40,17 @@ public class MainActivity extends BaseActivity {
 
    @Override
     protected void setupViews() {
+       /**
+        * fresco 网络图片加载
+        */
        mImageView.setImageURI(Uri.parse("http://f.hiphotos.baidu.com/image/pic/item/00e93901213fb80e0ee553d034d12f2eb9389484.jpg"));
        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /**
+                 * 运行时权限
+                 */
                 PermissionHelper.requestPermission(MainActivity.this, REQUECT_CODE_SDCARD,
                         new String[]{Manifest.permission.CALL_PHONE},"需要申请电话权限");
             }
