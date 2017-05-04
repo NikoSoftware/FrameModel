@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.framelib.adapter.BaseRecyclerViewAdapter;
+import com.example.framelib.adapter.BaseViewHandle;
 import com.example.niko.framemodel.R;
 
 import java.util.List;
@@ -36,7 +38,6 @@ public class RecyclerViewAdapter extends BaseRecyclerViewAdapter<String> {
 
     @Override
     public void onBind(BaseViewHandle holder, int position, String obj, int viewType) {
-
         ImageView imageView = (ImageView) holder.getView(R.id.imageview);
         TextView textView  = (TextView) holder.getView(R.id.textview);
         imageView.setImageResource(R.mipmap.ic_launcher);
