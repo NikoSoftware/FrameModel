@@ -2,7 +2,7 @@ import com.android.builder.core.DefaultManifestParser
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'android-apt'
 
 def getVersionNameFromManifest() {
     def manifestParser = new DefaultManifestParser(android.sourceSets.main.manifest.srcFile)
@@ -46,6 +46,6 @@ android {
         testCompile 'junit:junit:4.12'
         compile project(path: ':framelib')
         compile 'com.jakewharton:butterknife:8.5.1'
-        annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+        apt 'com.jakewharton:butterknife-compiler:8.5.1'
     }
 

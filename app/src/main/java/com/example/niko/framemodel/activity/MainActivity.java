@@ -5,6 +5,7 @@ import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity {
         /**
          * fresco 网络图片加载
          */
+        Log.e("mImageView",(mImageView==null)+"");
         mImageView.setImageURI(Uri.parse("http://f.hiphotos.baidu.com/image/pic/item/00e93901213fb80e0ee553d034d12f2eb9389484.jpg"));
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,11 +104,4 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
