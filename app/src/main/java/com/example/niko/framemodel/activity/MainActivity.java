@@ -36,7 +36,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void setLayout() {
-        Fresco.initialize(mContext);
         setContentView(R.layout.activity_main);
     }
 
@@ -53,17 +52,19 @@ public class MainActivity extends BaseActivity {
          */
         Log.e("mImageView",(mImageView==null)+"");
         mImageView.setImageURI(Uri.parse("http://f.hiphotos.baidu.com/image/pic/item/00e93901213fb80e0ee553d034d12f2eb9389484.jpg"));
-        mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                /**
-                 * 运行时权限
-                 */
-                PermissionHelper.requestPermission(MainActivity.this, REQUECT_CODE_SDCARD,
-                        new String[]{Manifest.permission.CALL_PHONE}, "需要申请电话权限");
-            }
-        });
+        RxView.clicks(mImageView)
+                .throttleFirst(1,TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        /**
+                         * 运行时权限
+                         */
+                        PermissionHelper.requestPermission(MainActivity.this, REQUECT_CODE_SDCARD,
+                                new String[]{Manifest.permission.CALL_PHONE}, "需要申请电话权限");
+                    }
+                });
 
         RxView.clicks(mBtnNet)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)

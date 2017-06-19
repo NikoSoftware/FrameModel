@@ -3,6 +3,8 @@ package com.example.niko.framemodel.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -19,6 +21,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = getApplicationContext();
         init();
     }
 
@@ -26,6 +29,7 @@ public class BaseApplication extends Application {
      * 初始化数据
      */
     private void init() {
+        Fresco.initialize(mContext);
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("myrealm.realm")
