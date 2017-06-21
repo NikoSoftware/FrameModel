@@ -65,6 +65,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public int getItemCount() {
+        if(list==null){
+            size= 0;
+        }else {
+            size = list.size();
+        }
         return size;
     }
 

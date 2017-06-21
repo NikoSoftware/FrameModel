@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -138,6 +139,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 显示Toast信息
+     * @param msg  String
+     */
+    public void showSnackbar(String msg) {
+
+        View view = this.getWindow().getDecorView();
+        if (view != null && msg != null && !"".equals(msg) && !"null".equals(msg)) {
+            Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+                    .setAction("取消", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // nothing
+                        }
+                    })
+                    .show();
+        }
+    }
 
     @Override
     protected void onDestroy() {
