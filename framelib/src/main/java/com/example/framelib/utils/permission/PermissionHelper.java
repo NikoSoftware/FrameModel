@@ -23,8 +23,13 @@ public class PermissionHelper {
         this.mObject = object;
     }
 
-    // 2.已什么的方式传参数
-    // 2.1 直接传参数
+    /**
+     * 权限请求
+     * @param activity or Fragment
+     * @param requestCode 请求码
+     * @param permissions 申请的权限集
+     * @param hint 提示信息 为null 或则为 “” 时 取消提示框
+     */
     public static void  requestPermission(Activity activity, int requestCode, String[] permissions, String hint){
             PermissionHelper.with(activity).requestCode(requestCode).
                     requestPermission(permissions).setHint(hint).request();
@@ -105,7 +110,7 @@ public class PermissionHelper {
      */
     public void warnHint(final List<String> deniedPermissions){
 
-        if(mHint==null){
+        if(mHint==null||mHint.equals("")){
             requestPermissions(deniedPermissions);
             return ;
         }

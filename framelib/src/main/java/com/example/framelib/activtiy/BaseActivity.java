@@ -138,6 +138,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 按键监听
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        /**
+         * 回退键监听
+         */
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+
+        }
+        return true;
+    }
+
+    /**
+     * 回退键点击时监听
+     */
+    public void onKeyBack(){
+
+
+    }
+
 
     /**
      * 显示Toast信息
