@@ -21,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected String TAG;//页面名称
     protected Context mContext;
+    private Bundle mBundle;
 
 
     @Override
@@ -28,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setLayout();
+        mBundle = getIntent().getExtras();
         initViews();
         setupViews();
         getActivityTag();

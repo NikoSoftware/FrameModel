@@ -18,10 +18,12 @@ public abstract class BaseFragment extends Fragment {
 
     public Context mContext;
     protected View mView;
+    public Bundle mBundle=null;
 
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mBundle = getArguments();
     }
 
     @Nullable
