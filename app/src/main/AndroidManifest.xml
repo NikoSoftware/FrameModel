@@ -28,7 +28,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.RxjavaAndRetrofitActivity"></activity>
+        <activity android:name=".activity.RxjavaAndRetrofitActivity"
+            android:theme="@style/AppTheme.NoStatusBar"
+            ></activity>
 
     </application>
 
