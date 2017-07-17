@@ -2,7 +2,10 @@ package com.example.niko.framemodel.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
+import com.example.framelib.BuildConfig;
+import com.example.framelib.utils.Tools.LogUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import io.realm.Realm;
@@ -29,6 +32,12 @@ public class BaseApplication extends Application {
      * 初始化数据
      */
     private void init() {
+        if (BuildConfig.LOG_DEBUG) {
+            LogUtil.init(true, Log.VERBOSE);
+        } else {
+            LogUtil.init(false);
+        }
+
         Fresco.initialize(mContext);
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
