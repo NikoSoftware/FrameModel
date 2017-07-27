@@ -1,5 +1,6 @@
 package com.example.framelib.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.framelib.pop.PopProgressDialog;
+
 /**
  * Created by niko on 2017/1/11.
  */
@@ -19,6 +22,7 @@ public abstract class BaseFragment extends Fragment {
     public Context mContext;
     protected View mView;
     public Bundle mBundle=null;
+    private PopProgressDialog mProgressDialog;
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -46,21 +50,12 @@ public abstract class BaseFragment extends Fragment {
             parent.removeView(mView);
         }
         // 主视图
-        initViews();
+        initViews(mView);
         setupViews();
         return mView;
     }
 
 
-    /**
-     * 初始化布局
-     */
-    protected abstract void initViews();
-
-    /**
-     * 给view赋值
-     */
-    protected abstract void setupViews();
     /**
      * 加载布局文件
      *
@@ -69,6 +64,15 @@ public abstract class BaseFragment extends Fragment {
      * @return View
      */
     protected abstract View setLayout(LayoutInflater inflater, ViewGroup container);
+    /**
+     * 初始化布局
+     */
+    protected abstract void initViews(View rootView);
+
+    /**
+     * 给view赋值
+     */
+    protected abstract void setupViews();
 
 
     /**
@@ -91,6 +95,43 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
+
+    /**
+     * 网络进度条启动
+     */
+    public void showProgressDialog(){
+        showProgressDialog("加载中");
+    }
+
+
+
+    /**
+     * 网络进度条启动
+     * @param msg
+     */
+    public void showProgressDialog(String msg){
+        if(mProgressDialog==null) {
+            mProgressDialog = new PopProgressDialog((Activity) mContext);
+            mProgressDialog.setPopupWindowFullScreen(true);
+            mView.post(new Runnable(){
+                @Override
+                public void run() {
+                    mProgressDialog.showPopupWindow();
+                }
+            });
+
+        }
+    }
+
+
+    /**
+     * 网络进度条关闭
+     */
+    public void dismissProgressDialog(){
+        if(mProgressDialog!=null){
+            mProgressDialog.dismiss();
+        }
+    }
 
 
 

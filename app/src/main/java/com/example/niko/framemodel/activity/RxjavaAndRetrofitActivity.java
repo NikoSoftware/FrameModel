@@ -86,7 +86,7 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
          adapter = new ImageRecyclerViewAdapter(mContext);
 
         mRecyclerView.setAdapter(adapter);
-        requestData();
+        mRecyclerView.refresh();
     }
 
 

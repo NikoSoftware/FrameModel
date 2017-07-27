@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.framelib.pop.PopProgressDialog;
+
 /**
  * 基类
  * Created by niko on 2017/1/11.
@@ -22,18 +24,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG;//页面名称
     protected Context mContext;
     private Bundle mBundle;
+    private PopProgressDialog mProgressDialog;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setLayout();
         mBundle = getIntent().getExtras();
+        setLayout();
         initViews();
         setupViews();
         getActivityTag();
-
     }
 
 
@@ -154,7 +156,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if(keyCode == KeyEvent.KEYCODE_BACK ){
 
         }
-        return true;
+        return super.onKeyDown(keyCode,event);
     }
 
     /**
@@ -164,6 +166,47 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     }
+
+
+
+    /**
+     * 网络进度条启动
+     */
+    public void showProgressDialog(){
+        showProgressDialog("加载中");
+    }
+
+
+
+    /**
+     * 网络进度条启动
+     * @param msg
+     */
+    public void showProgressDialog(String msg){
+        if(mProgressDialog==null) {
+            mProgressDialog = new PopProgressDialog((Activity) mContext);
+            mProgressDialog.setBackPressEnable(false);
+            mProgressDialog.setPopupWindowFullScreen(true);
+            this.findViewById(android.R.id.content).post(new Runnable() {
+                @Override
+                public void run() {
+                    mProgressDialog.showPopupWindow();
+                }
+            });
+
+        }
+    }
+
+
+    /**
+     * 网络进度条关闭
+     */
+    public void dismissProgressDialog(){
+        if(mProgressDialog!=null){
+            mProgressDialog.dismiss();
+        }
+    }
+
 
 
     /**

@@ -1,5 +1,7 @@
 package com.example.niko.framemodel.net;
 
+import android.util.Log;
+
 import com.example.niko.framemodel.model.ResultModel;
 
 import io.reactivex.Observer;
@@ -21,6 +23,13 @@ public abstract class CallObserver<T> implements Observer<Response<ResultModel<T
 
     @Override
     public void onNext(Response<ResultModel<T>> value) {
+
+        if(value!=null&&value.body()!=null) {
+            Log.e("TAG==>",value.body().toString() + "");
+        }else{
+            Log.e("TAG==>",value + "");
+        }
+
         /**
          * code 由项目后台协定，暂时默认0为网络请求正确
          */
@@ -32,6 +41,11 @@ public abstract class CallObserver<T> implements Observer<Response<ResultModel<T
     }
 
 
+    @Override
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        onFailure("网络异常");
+    }
 
     @Override
     public void onComplete() {

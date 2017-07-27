@@ -15,7 +15,6 @@ import java.util.Map;
  */
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseViewHandle> {
     protected Context context;
-    protected  int size;
     protected List<T> list;
     protected Map<Integer,Integer[]> map = new HashMap<Integer,Integer[]>();
 
@@ -31,11 +30,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      */
     public void setData(List<T> list){
         this.list =list;
-        if(list==null){
-            size= 0;
-        }else {
-            size = list.size();
-        }
         notifyDataSetChanged();
     }
 
@@ -66,11 +60,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     @Override
     public int getItemCount() {
         if(list==null){
-            size= 0;
+            return 0;
         }else {
-            size = list.size();
+            return list.size();
         }
-        return size;
+
     }
 
     @Override

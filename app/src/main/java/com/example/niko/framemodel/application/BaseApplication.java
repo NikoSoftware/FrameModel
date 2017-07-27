@@ -32,13 +32,14 @@ public class BaseApplication extends Application {
      * 初始化数据
      */
     private void init() {
+
+        Fresco.initialize(mContext);
         if (BuildConfig.LOG_DEBUG) {
             LogUtil.init(true, Log.VERBOSE);
         } else {
             LogUtil.init(false);
         }
 
-        Fresco.initialize(mContext);
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("myrealm.realm")
