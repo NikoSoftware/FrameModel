@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8f000000">
+    android:background="#1c000000">
 
 
     <RelativeLayout
@@ -20,12 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
+            android:gravity="center_horizontal"
             >
-            <ImageView
+            <ProgressBar
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/shape_rotate_progress"
                 android:scaleType="centerCrop"
+                android:indeterminateDrawable="@drawable/shape_rotate_progress"
                 />
             <TextView
                 android:id="@+id/tv_intro"

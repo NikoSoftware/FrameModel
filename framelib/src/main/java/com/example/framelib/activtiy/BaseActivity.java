@@ -194,6 +194,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             });
 
+        }else{
+            mProgressDialog.showPopupWindow();
         }
     }
 
@@ -202,9 +204,17 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 网络进度条关闭
      */
     public void dismissProgressDialog(){
-        if(mProgressDialog!=null){
-            mProgressDialog.dismiss();
-        }
+        /**
+         * 注意要等待视图加载完成
+         */
+        this.findViewById(android.R.id.content).post(new Runnable() {
+            @Override
+            public void run() {
+                if(mProgressDialog!=null){
+                    mProgressDialog.dismiss();
+                }
+            }
+        });
     }
 
 
