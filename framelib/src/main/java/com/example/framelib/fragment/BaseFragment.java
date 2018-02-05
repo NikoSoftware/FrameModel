@@ -5,19 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.framelib.pop.PopProgressDialog;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
  * Created by niko on 2017/1/11.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
 
     public Context mContext;
     protected View mView;

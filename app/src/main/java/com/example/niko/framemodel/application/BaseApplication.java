@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.framelib.BuildConfig;
-import com.example.framelib.utils.Tools.LogUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import io.realm.Realm;
@@ -35,9 +34,9 @@ public class BaseApplication extends Application {
 
         Fresco.initialize(mContext);
         if (BuildConfig.LOG_DEBUG) {
-            LogUtil.init(true, Log.VERBOSE);
+          //  LogUtil.init(true, Log.VERBOSE);
         } else {
-            LogUtil.init(false);
+         //   LogUtil.init(false);
         }
 
         Realm.init(this);

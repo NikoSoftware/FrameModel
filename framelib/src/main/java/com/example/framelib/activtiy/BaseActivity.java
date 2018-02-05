@@ -13,13 +13,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.framelib.pop.PopProgressDialog;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
  * 基类
  * Created by niko on 2017/1/11.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected String TAG;//页面名称
     protected Context mContext;
@@ -140,31 +141,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             }
         }
-    }
-
-    /**
-     * 按键监听
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /**
-         * 回退键监听
-         */
-        if(keyCode == KeyEvent.KEYCODE_BACK ){
-
-        }
-        return super.onKeyDown(keyCode,event);
-    }
-
-    /**
-     * 回退键点击时监听
-     */
-    public void onKeyBack(){
-
-
     }
 
 
