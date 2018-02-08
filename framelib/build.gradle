@@ -54,4 +54,7 @@ dependencies {
     compile 'com.android.support:percent:25.3.1'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
+    //权限管理
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
 }

@@ -12,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.framelib.R;
 import com.example.framelib.pop.PopProgressDialog;
+import com.example.framelib.utils.Tools.StatusBarUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
@@ -33,6 +35,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         mBundle = getIntent().getExtras();
+        setStatusBar();
         setLayout();
         initViews();
         setupViews();
@@ -223,4 +226,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public boolean dispatchKeyEvent(KeyEvent event) {
         return super.dispatchKeyEvent(event);
     }
+
+    /**
+     * 设置状态栏样式，默认设置状态栏为 colorPrimaryDark
+     * 如果需要修改请重写此方法 设置全屏和侧滑全屏
+     *
+     */
+    public void setStatusBar(){
+        StatusBarUtils.with(this)
+                .setColor(this.getResources().getColor(R.color.colorPrimaryDark))
+                .init();
+    }
+
 }
