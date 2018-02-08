@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.framelib.activtiy.BaseActivity;
+import com.example.framelib.utils.Tools.StatusBarUtils;
 import com.example.niko.framemodel.R;
 import com.example.niko.framemodel.adapter.ImageRecyclerViewAdapter;
 import com.example.niko.framemodel.model.MusicModel;
@@ -61,14 +62,12 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
     }
 
     @Override
-    protected void initViews() {
+    protected void setupViews() {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager( 2,
                 StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        
         mRecyclerView.setLayoutManager(layoutManager);
-
-      //  Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_sample);
-      //  mRecyclerView.addItemDecoration(mRecyclerView.new DividerItemDecoration(dividerDrawable));
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
@@ -99,6 +98,7 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
                 .throttleFirst(500, TimeUnit.MILLISECONDS)//500毫秒内同样请求丢弃
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Response<MusicModel>>bindToLifecycle())
                 .subscribe(new Observer<Response<MusicModel>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -190,12 +190,10 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
     }
 
 
+
     @Override
-    protected void setupViews() {
-
-
-
-
+    public void setStatusBar() {
+        StatusBarUtils.with(this)
+                .init();
     }
-
 }

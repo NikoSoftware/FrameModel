@@ -17,6 +17,8 @@ import com.example.framelib.pop.PopProgressDialog;
 import com.example.framelib.utils.Tools.StatusBarUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import butterknife.ButterKnife;
+
 /**
  * 基类
  * Created by niko on 2017/1/11.
@@ -39,7 +41,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setLayout();
         initViews();
         setupViews();
-        getActivityTag();
     }
 
 
@@ -49,20 +50,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected abstract void setLayout();
 
-    /**
-     * 获取activity TAG
-     *
-     * @return String
-     */
-    protected  String getActivityTag(){
-
-        return TAG;
-    }
 
     /**
      * 初始化控件
      */
-    protected abstract void initViews();
+    protected  void initViews(){
+        ButterKnife.bind(this);
+    }
 
     /**
      * 为控件填充内容
@@ -232,7 +226,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 如果需要修改请重写此方法 设置全屏和侧滑全屏
      *
      */
-    public void setStatusBar(){
+    protected void setStatusBar(){
         StatusBarUtils.with(this)
                 .setColor(this.getResources().getColor(R.color.colorPrimaryDark))
                 .init();
