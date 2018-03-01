@@ -4,10 +4,14 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -22,8 +26,6 @@ public final class SDCardUtils {
 
     /**
      * 判断SD卡是否可用
-     *
-     * @return true : 可用<br>false : 不可用
      */
     public static boolean isSDCardEnable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
@@ -31,8 +33,6 @@ public final class SDCardUtils {
 
     /**
      * 获取SD卡路径
-     * <p>先用shell，shell失败再普通方法获取，一般是/storage/emulated/0/</p>
-     *
      * @return SD卡路径
      */
     public static String getSDCardPath() {
@@ -95,6 +95,92 @@ public final class SDCardUtils {
         sd.totalBytes = sf.getTotalBytes();
         return sd.toString();
     }
+
+
+
+
+
+    /**
+     * 递归删除目录下的所有文件及子目录下所有文件
+     * @param path
+     * @return
+     */
+    public static boolean deleteDir(String path) {
+
+        File dir = new File(path);
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            //递归删除目录中的子目录下
+            for (int i=0; i<children.length; i++) {
+                boolean success = deleteDir(path+File.separator+children[i]);
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        // 目录此时为空，可以删除
+        return dir.delete();
+    }
+
+
+
+    /**
+     *重命名
+     * @param file
+     * @return 返回文件
+     */
+    public static File renameFile(File file){
+        String rootPath = file.getParent();
+        String name = file.getName();
+        name = name.substring(0,name.length()-1);
+        file.renameTo(new File(rootPath+File.separator+name));
+        return file;
+    }
+
+    /**
+     * 文件写入
+     * @param file 文件名称
+     * @param is 文件输入流
+     * @return 是否完成写入
+     */
+    public static boolean writeFile(File file,InputStream is){
+        FileOutputStream fileOutputStream=null;
+        try {
+
+            /**
+             * 判断文件是否创建成功，如果未创建成功，重新创建
+             */
+            if(!file.getParentFile().exists()){
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+
+            fileOutputStream = new FileOutputStream(file);
+            byte[] bytes = new byte[1024];
+            int length = -1;
+
+            while((length = is.read(bytes))!=-1){
+                fileOutputStream.write(bytes,0,length);
+            }
+            fileOutputStream.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            try {
+                if(fileOutputStream!=null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
+    }
+
+
 
     public static class SDCardInfo {
         boolean isExist;

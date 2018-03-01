@@ -2,6 +2,7 @@ package com.example.niko.framemodel.activity;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,10 +12,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.framelib.activtiy.BaseActivity;
+import com.example.framelib.pop.PopDownLoadProgress;
+import com.example.framelib.utils.Tools.SDCardUtils;
+import com.example.framelib.utils.Tools.StatusBarUtils;
 import com.example.framelib.utils.permission.PermissionFail;
 import com.example.framelib.utils.permission.PermissionHelper;
 import com.example.framelib.utils.permission.PermissionSucceed;
 import com.example.niko.framemodel.R;
+import com.example.niko.framemodel.config.Config;
 import com.example.niko.framemodel.net.ProgressListener;
 import com.example.niko.framemodel.net.RetrofitClient;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,11 +33,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setLayout() {
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
     }
 
 
@@ -64,7 +66,7 @@ public class MainActivity extends BaseActivity {
          * fresco 网络图片加载
          */
         Log.e("mImageView", (mImageView == null) + "");
-        mImageView.setImageURI(Uri.parse("http://f.hiphotos.baidu.com/image/pic/item/00e93901213fb80e0ee553d034d12f2eb9389484.jpg"));
+        mImageView.setImageURI("http://f.hiphotos.baidu.com/image/pic/item/00e93901213fb80e0ee553d034d12f2eb9389484.jpg");
 
         RxView.clicks(mImageView)
                 .throttleFirst(1, TimeUnit.SECONDS)
@@ -75,7 +77,8 @@ public class MainActivity extends BaseActivity {
                          * 运行时权限
                          */
                         PermissionHelper.requestPermission(MainActivity.this, REQUECT_CODE_SDCARD,
-                                new String[]{Manifest.permission.CALL_PHONE}, "需要申请电话权限");
+                                new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE}, "需要申请电话权限");
                     }
                 });
 
@@ -122,35 +125,43 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.btn_1)
     public void onViewClicked() {
 
-        Log.e("TAG","进入");
+        final PopDownLoadProgress mPopDownLoadProgress=  new PopDownLoadProgress(((Activity) mContext)).setTitle("文件下载",R.mipmap.ic_launcher);
+        mPopDownLoadProgress.showPopupWindow();
+
         RetrofitClient.getUploadOrDownloadService(new ProgressListener(mContext) {
             @Override
             public void onProgress(long progress, long total, boolean done) {
-                Log.e("total",total+"");
-                Log.e("progress",progress+"");
+                mPopDownLoadProgress.setProgress(progress, total);
 
+                if(done){
+                    mPopDownLoadProgress.dismiss();
+                }
             }
         }).downloadFile(image)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
-                        Log.e("TAG","发大发"+ response.body().contentLength());
-                        InputStream inputStream = response.body().byteStream();
-                        byte[] bytes = new byte[5*1024];
-                        try {
-                            inputStream.read(bytes);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Log.e("TAG","长度："+ response.body().contentLength());
+                        final InputStream inputStream = response.body().byteStream();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                File docFile = new File(Config.DOC_PATH + File.separator + "下载文件.apk");
+                                SDCardUtils.writeFile(docFile, inputStream);
+                            }
+                        }).start();
 
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.printStackTrace();
+                        mPopDownLoadProgress.dismiss();
                     }
                 });
 
 
     }
+
 }

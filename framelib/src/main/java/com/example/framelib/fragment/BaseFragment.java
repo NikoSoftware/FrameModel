@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.example.framelib.pop.PopProgressDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by niko on 2017/1/11.
@@ -26,7 +24,6 @@ public abstract class BaseFragment extends RxFragment {
     protected View mView;
     public Bundle mBundle=null;
     private PopProgressDialog mProgressDialog;
-    Unbinder unbinder;
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -53,8 +50,6 @@ public abstract class BaseFragment extends RxFragment {
         if (parent != null) {
             parent.removeView(mView);
         }
-        // 主视图
-        initViews(mView);
         setupViews();
         return mView;
     }
@@ -68,13 +63,6 @@ public abstract class BaseFragment extends RxFragment {
      * @return View
      */
     protected abstract View setLayout(LayoutInflater inflater, ViewGroup container);
-    /**
-     * 初始化布局
-     */
-    protected void initViews(View rootView){
-        unbinder =ButterKnife.bind(this, rootView);
-
-    }
 
     /**
      * 给view赋值
@@ -174,6 +162,5 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
     }
 }

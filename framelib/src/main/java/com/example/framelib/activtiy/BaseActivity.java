@@ -11,13 +11,13 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.framelib.R;
 import com.example.framelib.pop.PopProgressDialog;
 import com.example.framelib.utils.Tools.StatusBarUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import butterknife.ButterKnife;
 
 /**
  * 基类
@@ -39,24 +39,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         mBundle = getIntent().getExtras();
         setStatusBar();
         setLayout();
-        initViews();
         setupViews();
     }
 
 
 
     /**
-     * 为Activity添加布局文件
+     * 为Activity添加布局文件 初始化控件
      */
     protected abstract void setLayout();
 
-
-    /**
-     * 初始化控件
-     */
-    protected  void initViews(){
-        ButterKnife.bind(this);
-    }
 
     /**
      * 为控件填充内容
@@ -197,18 +189,21 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param msg  String
      */
     public void showSnackbar(String msg) {
+//
+//        View view = this.getWindow().getDecorView();
+//        if (view != null && msg != null && !"".equals(msg) && !"null".equals(msg)) {
+//            Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+//                    .setAction("取消", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            // nothing
+//                        }
+//                    })
+//                    .show();
+//        }
 
-        View view = this.getWindow().getDecorView();
-        if (view != null && msg != null && !"".equals(msg) && !"null".equals(msg)) {
-            Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
-                    .setAction("取消", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // nothing
-                        }
-                    })
-                    .show();
-        }
+        Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

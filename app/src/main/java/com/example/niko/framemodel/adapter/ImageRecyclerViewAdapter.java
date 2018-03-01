@@ -27,8 +27,8 @@ public class ImageRecyclerViewAdapter extends BaseRecyclerViewAdapter<TracksBean
     }
 
     @Override
-    public void onBind(BaseViewHandle holder, int position, TracksBean obj, int viewType) {
-        ((SimpleDraweeView) holder.getView(R.id.imageview)).setImageURI(obj.getAlbum().getBlurPicUrl());
+    public void onBind(BaseViewHandle holder, int position, TracksBean model, int viewType) {
+        ((SimpleDraweeView) holder.getView(R.id.imageview)).setImageURI(model.getAlbum().getBlurPicUrl());
     }
 
     @Override

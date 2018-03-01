@@ -661,6 +661,7 @@ public abstract class BasePopupWindow implements BasePopup, PopupWindow.OnDismis
         try {
             mPopupWindow.dismiss();
         } catch (Exception e) {
+            e.printStackTrace();
             Log.e(TAG, "dismiss error");
         }
     }

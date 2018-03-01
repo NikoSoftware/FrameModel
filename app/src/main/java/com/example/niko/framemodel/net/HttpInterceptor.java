@@ -15,7 +15,7 @@ public class HttpInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
 
-        Log.e("request:    ",chain.request().url().toString());
+        ;
         Response response =chain.proceed(chain.request());
 
         Log.e("response:    ",response.body().toString());

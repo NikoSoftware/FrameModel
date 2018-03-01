@@ -13,7 +13,8 @@ import okio.Okio;
 import okio.Source;
 
 /**
- * Created by niko on 2017/11/6.
+ * 网络下载进度监听器
+ * Created by niko on 2018/2/8.
  */
 
 public class ProgressResponseBody extends ResponseBody {
@@ -55,7 +56,7 @@ public class ProgressResponseBody extends ResponseBody {
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
 
                 Log.e("byteCount",totalBytesRead+"");
-                progressListener.onProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
+                progressListener.onAsyMainProgress(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
                 return bytesRead;
             }
         };

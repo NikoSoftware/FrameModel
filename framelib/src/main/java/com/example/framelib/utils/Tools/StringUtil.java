@@ -9,6 +9,12 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
+
+    /**
+     * 是否为null
+     * @param str
+     * @return
+     */
     public static boolean isEmpty(String str) {
         if (str == null || "null".equals(str) || str.length() == 0) {
             return true;
@@ -17,6 +23,11 @@ public class StringUtil {
         }
     }
 
+    /**
+     * 是否是网络地址
+     * @param url
+     * @return
+     */
     public static boolean isHttpSource(String url) {
         if (url == null) {
             return false;
@@ -24,6 +35,11 @@ public class StringUtil {
         return (url.startsWith("http://") || url.startsWith("https://"));
     }
 
+    /**
+     * 是否是当前位置
+     * @param url
+     * @return
+     */
     public static boolean isLocalSource(String url) {
         if (url == null) {
             return false;
@@ -31,13 +47,12 @@ public class StringUtil {
         return (url.startsWith("/"));
     }
 
-    public static boolean isDrawableSource(String url) {
-        if (url == null) {
-            return false;
-        }
-        return url.startsWith("drawable://");
-    }
 
+    /**
+     * 是否是图片路径
+     * @param url
+     * @return
+     */
     public static boolean isImageUrl(String url) {
         if (url == null) {
             return false;
@@ -54,25 +69,12 @@ public class StringUtil {
         return (url.endsWith(".gif"));
     }
 
-    public static boolean isVideaUrl(String url) {
-        if (url == null) {
-            return false;
-        }
-        url = url.toLowerCase();
-        return (url.endsWith(".3gp") || url.endsWith(".mp4") || url.endsWith(".avi"));
-    }
 
-    public static boolean isVcode(String vcode) {
-        if (isEmpty(vcode)) {
-            return false;
-        }
-        int length = vcode.length();
-        if (length >= 6 && length <= 8) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * 是否是密码
+     * @param passwd
+     * @return
+     */
     public static boolean isPassword(String passwd) {
         if (isEmpty(passwd)) {
             return false;
@@ -84,6 +86,11 @@ public class StringUtil {
         return false;
     }
 
+    /**
+     * 是否是电话号码
+     * @param phone
+     * @return
+     */
     public static boolean isPhoneNumber(String phone) {
         if (isEmpty(phone)) {
             return false;
@@ -94,6 +101,11 @@ public class StringUtil {
         return m.matches();
     }
 
+    /**
+     * 是否是身份证号
+     * @param idCard
+     * @return
+     */
     public static boolean isIdCard(String idCard) {
         if (isEmpty(idCard)) {
             return false;
@@ -104,6 +116,11 @@ public class StringUtil {
         return m.find();
     }
 
+    /**
+     * 输入流转字符串
+     * @param is
+     * @return
+     */
     public static String inputStream2String(InputStream is) {
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
         StringBuffer buffer = new StringBuffer();
@@ -118,6 +135,11 @@ public class StringUtil {
         return buffer.toString();
     }
 
+    /**
+     * 处理为加密字符
+     * @param idCard
+     * @return
+     */
     public static String idCardDeal(String idCard) {
         StringBuffer sb = new StringBuffer(idCard);
         sb.replace(6, 16, "**********");

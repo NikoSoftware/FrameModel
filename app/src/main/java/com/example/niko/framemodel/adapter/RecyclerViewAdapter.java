@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 赋值测试
  * Created by Niko on 2016/4/27.
  */
 public class RecyclerViewAdapter extends BaseRecyclerViewAdapter<String> {
@@ -27,6 +28,7 @@ public class RecyclerViewAdapter extends BaseRecyclerViewAdapter<String> {
         map.put( R.layout.item_view,new Integer[]{
                 R.id.imageview,R.id.textview
         });
+
     }
 
 

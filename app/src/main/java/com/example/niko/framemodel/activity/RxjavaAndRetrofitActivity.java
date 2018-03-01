@@ -1,13 +1,15 @@
 package com.example.niko.framemodel.activity;
 
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.framelib.activtiy.BaseActivity;
 import com.example.framelib.utils.Tools.StatusBarUtils;
@@ -19,17 +21,13 @@ import com.example.niko.framemodel.net.RetrofitClient;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -51,22 +49,27 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
     XRecyclerView mRecyclerView;
     @BindView(R.id.main_content)
     CoordinatorLayout mainContent;
+    @BindView(R.id.backdrop)
+    ImageView backdrop;
     private ImageRecyclerViewAdapter adapter;
 
     @Override
     protected void setLayout() {
         setContentView(R.layout.ok_http_activity);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void setupViews() {
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager( 2,
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle("Realm数据库和网络请求");
+
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        
+
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
@@ -82,14 +85,25 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
 
             }
         });
-         adapter = new ImageRecyclerViewAdapter(mContext);
+        adapter = new ImageRecyclerViewAdapter(mContext);
 
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.refresh();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
 
-    public void requestData(){
+            case android.R.id.home:
+
+                finish();
+                break;
+        }
+        return true;
+    }
+
+    public void requestData() {
 
         /**
          * Retrofit 网络请求Rxjava线程切换
@@ -109,42 +123,7 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
                     @Override
                     public void onNext(final Response<MusicModel> value) {
 
-      /*           Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                realm.insert(value.body());
 
-                            }
-                        });
-                        RealmResults<MusicModel> musicModels = Realm.getDefaultInstance().where(MusicModel.class).findAll();
-                        List<TracksBean> resultBean = musicModels.get(3).getResult().getTracks();
-                        */
-                    final Long startTime =System.currentTimeMillis();
-/*
-                        Observable.just(value.body())
-                                .map(new Function<MusicModel, RealmResults<TracksBean>>() {
-                                    @Override
-                                    public RealmResults<TracksBean> apply(final MusicModel musicModel) throws Exception {
-                                        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-                                            @Override
-                                            public void execute(Realm realm) {
-                                                realm.copyToRealmOrUpdate(musicModel.getResult().getTracks());
-                                            }
-                                        });
-                                        return Realm.getDefaultInstance().where(TracksBean.class).findAll();
-                                    }
-                                })
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<RealmResults<TracksBean>>() {
-                                    @Override
-                                    public void accept(RealmResults<TracksBean> tracksBeens) throws Exception {
-                                        Long endTime =System.currentTimeMillis();
-
-                                        adapter.setData(tracksBeens);
-                                    }
-                                });
-                        */
                         /**
                          * 数据库存取代码
                          */
@@ -155,19 +134,14 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
                             }
                         });
 
-
-                        final Long endTime =System.currentTimeMillis();
-
-                        RealmResults<TracksBean>  tracksBeans=Realm.getDefaultInstance().where(TracksBean.class).findAllAsync();
+                        RealmResults<TracksBean> tracksBeans = Realm.getDefaultInstance().where(TracksBean.class).findAllAsync();
                         tracksBeans.addChangeListener(new RealmChangeListener<RealmResults<TracksBean>>() {
                             @Override
                             public void onChange(RealmResults<TracksBean> element) {
                                 adapter.setData(element);
-                                Log.e("xendTime", String.valueOf(startTime-endTime));
                             }
                         });
                         adapter.setData(tracksBeans);
-                        Log.e("endTime", String.valueOf(startTime-endTime));
 
                     }
 
@@ -185,10 +159,7 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
                 });
 
 
-
-
     }
-
 
 
     @Override
@@ -196,4 +167,5 @@ public class RxjavaAndRetrofitActivity extends BaseActivity {
         StatusBarUtils.with(this)
                 .init();
     }
+
 }

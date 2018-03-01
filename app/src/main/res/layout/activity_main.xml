@@ -9,15 +9,15 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageview"
-        android:layout_centerInParent="true"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        fresco:fadeDuration="300"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         fresco:actualImageScaleType="focusCrop"
+        fresco:fadeDuration="300"
         fresco:progressBarImage="@drawable/icon_progressbar"
         fresco:progressBarImageScaleType="centerInside"
-        fresco:roundAsCircle="true"
-        />
+        fresco:roundAsCircle="true" />
     <Button
         android:id="@+id/btn_net"
         android:layout_width="150dp"

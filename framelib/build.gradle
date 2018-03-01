@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
+
 
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
@@ -36,6 +36,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.fresco:fresco:1.0.0'
@@ -54,10 +55,6 @@ dependencies {
     compile 'com.android.support:percent:25.3.1'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
-    compile 'com.jakewharton:butterknife:8.6.0'
-    apt 'com.jakewharton:butterknife-compiler:8.6.0'
 
-    //权限管理
-    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
 }

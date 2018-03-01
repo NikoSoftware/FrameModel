@@ -19,16 +19,33 @@ import retrofit2.http.Url;
 
 public interface ApiService {
 
+
+    /**
+     * 获取链接信息
+     * @param id
+     * @return
+     */
     //58451795
     @Headers("Cache-Control: max-age=640000")
     @GET("/api/playlist/detail")
     public Observable<Response<MusicModel>> getMusic(@Query("id") String id);
 
+
+    /**
+     * 获取音乐数据
+     * @param id
+     * @return
+     */
     @Headers("Cache-Control: max-age=640000")
     @GET("/api/playlist/detail")
     public Call<MusicModel> getCallMusic(@Query("id") String id);
 
 
+    /**
+     * 文件下载
+     * @param url 文件下载地址
+     * @return
+     */
     @Streaming
     @GET
     Call<ResponseBody> downloadFile(@Url String url);

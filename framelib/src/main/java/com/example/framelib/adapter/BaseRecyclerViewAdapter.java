@@ -55,8 +55,20 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         onBind(holder,position,list.get(position),getItemViewType(position));
     }
 
-    public abstract void onBind(BaseViewHandle holder, int position,T obj,int viewType);
 
+    /**
+     * 绑定View数据
+     * @param holder item数据集
+     * @param position 当前位置信息
+     * @param model 当前item数据
+     * @param viewType 当前itemView 类型
+     */
+    public abstract void onBind(BaseViewHandle holder, int position,T model,int viewType);
+
+    /**
+     * 获取list 长度
+     * @return
+     */
     @Override
     public int getItemCount() {
         if(list==null){
@@ -72,6 +84,12 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return getItemViewsType(position);
     }
 
+
+    /**
+     * 设置adapter item 类型
+     * @param position
+     * @return 当前itemView 类型
+     */
     public abstract int getItemViewsType(int position);
 
 }
