@@ -22,5 +22,3 @@
 ![](https://github.com/NikoSoftware/FrameModel/raw/master/image/Screenshot_2017-08-15-20-04-42-274_com.westarsoft.png)
 
 ![](https://github.com/NikoSoftware/FrameModel/raw/master/image/Screenshot_2017-08-15-20-04-49-041_com.westarsoft.png)
-
-![](https://github.com/NikoSoftware/FrameModel/raw/master/image/Screenshot_2017-08-21-09-37-09-607_com.westarsoft.png)
